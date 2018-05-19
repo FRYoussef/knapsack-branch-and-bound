@@ -1,9 +1,10 @@
 package brachAndBound.bound;
 
 import brachAndBound.problem.KnapsackProblem;
+import javafx.util.Pair;
 
 public interface Bound {
 
-    void estimate(KnapsackProblem kP, int depth, float weight, float benefit, Float pes, Float opt);
+    Pair<Float, Float> estimate(KnapsackProblem kp, int depth, float weight, float profit);
 
 }

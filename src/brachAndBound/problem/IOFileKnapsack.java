@@ -8,19 +8,17 @@ public class IOFileKnapsack {
         BufferedReader br = new BufferedReader(new FileReader(new File(file)));
         int n;
         float kWeight;
-        Float oWeight[] = null;
-        Float oValue[] = null;
+        ObjectKP objs[] = null;
 
         n = Integer.parseInt(br.readLine());
         kWeight = Float.parseFloat(br.readLine());
-        oWeight = new Float[n];
-        oValue = new Float[n];
+        objs = new ObjectKP[n];
 
-        for(int i = 0; i < n; i++)  oWeight[i] = Float.parseFloat(br.readLine());
-        for(int i = 0; i < n; i++)  oValue[i] = Float.parseFloat(br.readLine());
+        for(int i = 0; i < n; i++)
+            objs[i] = new ObjectKP(Float.parseFloat(br.readLine()), Float.parseFloat(br.readLine()));
 
         br.close();
-        return new KnapsackProblem(kWeight, oWeight, oValue);
+        return new KnapsackProblem(kWeight, objs);
     }
 
     public static void writeKnapsack(KnapsackProblem kp, String file) throws Exception {
@@ -33,17 +31,14 @@ public class IOFileKnapsack {
         bw.newLine();
         bw.write(kp.K_WEIGHT + "");
         bw.newLine();
-        for(Float f : kp.getoWeight()){
-            bw.write(f.toString());
+        for(ObjectKP o : kp.getObjs()){
+            bw.write(o.getoWeight() + "");
             bw.newLine();
-        }
-
-        for(Float f : kp.getoValue()){
-            bw.write(f.toString());
+            bw.write(o.getoValue() + "");
             bw.newLine();
         }
 
         bw.close();
+        System.out.println("Saved!!!");
     }
-
 }

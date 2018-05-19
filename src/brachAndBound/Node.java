@@ -1,19 +1,21 @@
 package brachAndBound;
 
-public class Node {
+public class Node implements Comparable{
 
     private boolean []solution = null;
     private int depth;
     private float weight;
-    private float benefit;
-    private float opBenefit;
+    private float profit;
+    private float opProfit;
 
     public Node(int n) {
         solution = new boolean[n];
+
+        depth = -1;
     }
 
-    public Node(boolean[] solution, int depth) {
-        solution = solution.clone();
+    public Node(int depth, boolean[] solution) {
+        this.solution = solution.clone();
         this.depth = depth + 1;
     }
 
@@ -41,19 +43,32 @@ public class Node {
         this.weight = weight;
     }
 
-    public float getBenefit() {
-        return benefit;
+    public float getProfit() {
+        return profit;
     }
 
-    public void setBenefit(float benefit) {
-        this.benefit = benefit;
+    public void setProfit(float profit) {
+        this.profit = profit;
     }
 
-    public float getOpBenefit() {
-        return opBenefit;
+    public float getOpProfit() {
+        return opProfit;
     }
 
-    public void setOpBenefit(float opBenefit) {
-        this.opBenefit = opBenefit;
+    public void setOpProfit(float opProfit) {
+        this.opProfit = opProfit;
+    }
+
+    public void setSolDepth(boolean b){
+        solution[depth] = b;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Node n = (Node)o;
+        int res = 0;
+        if(opProfit > n.getOpProfit()) res = 1;
+        else if(n.getOpProfit() > opProfit) res = -1;
+        return res;
     }
 }

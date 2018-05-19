@@ -26,9 +26,8 @@ public class Main {
         Bound bound = null;
 
         do{
-            System.out.print(MENU);
-
             try{
+                System.out.print(MENU);
                 op = Integer.parseInt(sc.nextLine());
                 switch (op){
 
@@ -36,14 +35,14 @@ public class Main {
                         int numObj;
                         do { numObj = askNumObj(); } while (numObj == -1);
                         kP = KnapsackProblem.getRandomKnapsackProblem(numObj);
-                        System.out.println(kP);
+                        System.out.println("\n" + kP);
                         break;
 
                     case 2:
                         System.out.print("Introduce a file name: ");
                         aux = sc.nextLine();
                         kP = IOFileKnapsack.getKnapSack(aux);
-                        System.out.println(kP);
+                        System.out.println("\n" + kP);
                         break;
 
                     case 3:
@@ -68,7 +67,7 @@ public class Main {
 
                         BranchAndBound bb = new BranchAndBound(bound, kP);
                         bb.calculateOptimalSolution();
-                        System.out.println(bb);
+                        System.out.println("\n" + bb + "\n");
                         break;
 
                     case 5:

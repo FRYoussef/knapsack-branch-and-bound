@@ -12,83 +12,53 @@ public class KnapsackProblem {
 
     // the knapsack weight
     public final float K_WEIGHT;
-    // the object´s weight
-    private Float oWeight[] = null;
-    // the object´s value
-    private Float oValue[] = null;
+    private ObjectKP objs[] = null;
 
     /**
-     * The params oWeight and oValue must be ordered
+     * The param objs must be ordered
      * @param k_WEIGHT
-     * @param oWeight oWeight[0] >= oWeight[1] >= ... >= oWeight[n]
-     * @param oValue oValue[0] >= oValue[1] >= ... >= oValue[n]
+     * @param objs objs[0] >= objs[1] >= ... >= objs[n]
      */
-    public KnapsackProblem(float k_WEIGHT, Float[] oWeight, Float[] oValue) throws Exception {
-        if(oWeight.length != oValue.length)
-            throw new Exception("The object´s weight and value arrays must be the same length");
-
+    public KnapsackProblem(float k_WEIGHT, ObjectKP []objs){
         K_WEIGHT = k_WEIGHT;
-        this.oWeight = oWeight;
-        this.oValue = oValue;
+        this.objs = objs;
     }
 
-    public Float[] getoWeight() {
-        return oWeight;
+    public int getObjectsNumber(){ return objs.length; }
+
+    public float getPosWeight(int pos){
+        return objs[pos].getoWeight();
     }
 
-    public void setoWeight(Float[] oWeight) {
-        this.oWeight = oWeight;
+    public float getPosValue(int pos){
+        return objs[pos].getoValue();
     }
 
-    public Float[] getoValue() {
-        return oValue;
-    }
-
-    public void setoValue(Float[] oValue) {
-        this.oValue = oValue;
-    }
-
-    public int getObjectsNumber(){
-        return oValue.length;
-    }
-
-    public float getK_WEIGHT() {
-        return K_WEIGHT;
+    public ObjectKP[] getObjs() {
+        return objs;
     }
 
     public static KnapsackProblem getRandomKnapsackProblem(int n){
         Random r = new Random(System.currentTimeMillis());
         float kWeight = r.nextFloat() + r.nextInt(MAX_WEIGHT_KNAPSACK);
-        ArrayList<Float> alWeight = new ArrayList<Float>(n);
-        ArrayList<Float> alValue = new ArrayList<Float>(n);
+        ArrayList<ObjectKP> alObjs = new ArrayList<ObjectKP>(n);
 
-        for(int i = 0; i < n; i++){
-            alWeight.add(r.nextFloat() + r.nextInt(MAX_WEIGHT));
-            alValue.add(r.nextFloat() + r.nextInt(MAX_VALUE));
-        }
+        for(int i = 0; i < n; i++)
+            alObjs.add(new ObjectKP(r.nextFloat() + r.nextInt(MAX_WEIGHT), r.nextFloat() + r.nextInt(MAX_VALUE)));
 
-        alWeight.sort(Float::compareTo);
-        Collections.reverse(alWeight);
-        alValue.sort(Float::compareTo);
-        Collections.reverse(alValue);
+        alObjs.sort(ObjectKP::compareTo);
+        Collections.reverse(alObjs);
 
-        KnapsackProblem kP = null;
-
-        try {
-            kP = new KnapsackProblem(kWeight, alWeight.toArray(new Float[n]), alValue.toArray(new Float[n]));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return kP;
+        return new KnapsackProblem(kWeight, alObjs.toArray(new ObjectKP[n]));
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Knapsack´s weight: " + K_WEIGHT + "\n");
-        sb.append("Object´s weight: ");
-        for(Float f : oWeight) sb.append(f).append(", ");
         sb.append("\nObject´s value: ");
-        for(Float f : oValue) sb.append(f).append(", ");
+        for(ObjectKP o : objs) sb.append(o.getoValue()).append(", ");
+        sb.append("\nObject´s weight: ");
+        for(ObjectKP o : objs) sb.append(o.getoWeight()).append(", ");
         return sb.append("\n").toString();
     }
 }
