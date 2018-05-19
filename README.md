@@ -1,2 +1,2 @@
-# SackpackBB
-Branch and Bound applied to sackpack problem 
+# KnapsackBB
+Branch and Bound applied to knapsack problem 
