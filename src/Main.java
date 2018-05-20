@@ -7,6 +7,10 @@ import brachAndBound.problem.KnapsackProblem;
 
 import java.util.Scanner;
 
+/**
+ * Author: Youssef El Faqir El Rhazoui
+ * Date: 20/15/2018
+ */
 public class Main {
 
     private static final String MENU = "1. Generate a random knapsack.\n" +

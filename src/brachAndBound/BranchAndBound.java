@@ -12,6 +12,8 @@ public class BranchAndBound {
     private KnapsackProblem kp = null;
     private boolean[] bestSol = null;
     private float bestProfit = 0f;
+    private double time = 0d;
+    private int visitedNodes = 0;
 
     public BranchAndBound(Bound bound, KnapsackProblem kp) {
         this.bound = bound;
@@ -20,6 +22,7 @@ public class BranchAndBound {
     }
 
     public void calculateOptimalSolution(){
+        time = System.currentTimeMillis();
         boolean firstSol = true;
         Node x, y = new Node(kp.getObjectsNumber());
         PriorityQueue<Node> pq = new PriorityQueue<Node>(Collections.reverseOrder());
@@ -36,6 +39,7 @@ public class BranchAndBound {
             //we will try to select this object
             if(y.getWeight() + kp.getPosWeight(x.getDepth()) <= kp.K_WEIGHT)
             {
+                visitedNodes++;
                 x.setSolDepth(true);
                 x.setWeight(y.getWeight() + kp.getPosWeight(x.getDepth()));
                 x.setProfit(y.getProfit() + kp.getPosValue(x.getDepth()));
@@ -55,6 +59,7 @@ public class BranchAndBound {
             //we will try to no select the object
             tuple = bound.estimate(kp, y.getDepth(), y.getWeight(), y.getProfit());
             if(tuple.getKey() >= bestProfit){
+                visitedNodes++;
                 x = new Node(y.getDepth(), y.getSolution());
                 x.setOpProfit(tuple.getKey());
                 x.setSolDepth(false);
@@ -77,6 +82,7 @@ public class BranchAndBound {
             }
 
         }
+        time = System.currentTimeMillis() - time;
     }
 
 
@@ -86,6 +92,9 @@ public class BranchAndBound {
         sb.append("Optimal solution (the objects chosen are marked with 1): ");
         for(boolean b : bestSol) sb.append(b ? "1" : "0").append(", ");
         sb.append("\nProfit: ").append(bestProfit);
+        sb.append("\nTime: ").append(time).append("ms");
+        sb.append("\nNodes explored: ").append(visitedNodes);
+        sb.append("\nMean time per node: ").append(time/visitedNodes).append("ms");
         return sb.toString();
     }
 }
