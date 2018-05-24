@@ -12,7 +12,7 @@ public class SoftBound implements Bound {
      * @param depth
      * @param weight
      * @param profit
-     * @return (optimistic, pessimistic)
+     * @return a tuple: (optimistic, pessimistic)
      */
     @Override
     public Pair<Float, Float> estimate(KnapsackProblem kp, int depth, float weight, float profit) {

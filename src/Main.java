@@ -1,6 +1,7 @@
 import brachAndBound.BranchAndBound;
 import brachAndBound.bound.Bound;
 import brachAndBound.bound.HardBound;
+import brachAndBound.bound.NonBound;
 import brachAndBound.bound.SoftBound;
 import brachAndBound.problem.IOFileKnapsack;
 import brachAndBound.problem.KnapsackProblem;
@@ -59,15 +60,18 @@ public class Main {
                         if(kP == null)
                             throw new Exception("There is no a knapsack problem.");
 
-                        System.out.println("Do you want a soft or hard bound? (s, h): ");
+                        System.out.println("Do you want a soft, hard or non bound? (s, h, n): ");
                         aux = sc.nextLine();
-                        if(!aux.equalsIgnoreCase("s") && !aux.equalsIgnoreCase("h"))
+                        if(!aux.equalsIgnoreCase("s") && !aux.equalsIgnoreCase("h")
+                                && !aux.equalsIgnoreCase("n"))
                             throw new Exception(aux + " is not a valid answer.");
 
                         if(aux.equalsIgnoreCase("s"))
                             bound = new SoftBound();
-                        else
+                        else if(aux.equalsIgnoreCase("h"))
                             bound = new HardBound();
+                        else
+                            bound = new NonBound();
 
                         BranchAndBound bb = new BranchAndBound(bound, kP);
                         bb.calculateOptimalSolution();
